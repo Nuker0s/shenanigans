@@ -101,7 +101,7 @@ public class playermovement : MonoBehaviour
 
         movemento();
         jumperro();
-        if (!grounded && rb.velocity.y > maxadditionalfallspeed)
+        if (!grounded && rb.velocity.y < maxadditionalfallspeed)
         {
             rb.velocity += new Vector3(0, -fallspeed, 0);
         }
