@@ -54,7 +54,7 @@ public class playermovement : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-        lookero();
+        
         if (grounded) 
         {
             rb.drag = grounddrag;
@@ -93,10 +93,12 @@ public class playermovement : MonoBehaviour
         {
             rb.drag = 1f;
         }*/
+        lookero();
 
     }
     private void FixedUpdate()
     {
+
         movemento();
         jumperro();
         if (!grounded && rb.velocity.y > maxadditionalfallspeed)
