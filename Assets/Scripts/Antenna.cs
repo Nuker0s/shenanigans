@@ -8,8 +8,8 @@ public class Antenna : MonoBehaviour
 
     public SplineContainer sc;
     public Transform tip; //tip of the antenna (must NOT use base as a parent)
-    public Transform tiptarget;
-    public float lerpvalue;
+    public Transform tiptarget; //where tip of the antenna should be when stationary
+    public float lerpvalue = 30;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,7 @@ public class Antenna : MonoBehaviour
     void Update()
     {
 
-        tip.position = Vector3.Lerp(tip.position, tiptarget.position, lerpvalue*Time.deltaTime);
+        tip.position = Vector3.Lerp(tip.position, tiptarget.position, lerpvalue * Time.deltaTime);
         SplineContainer MySpline = sc;
 
 
