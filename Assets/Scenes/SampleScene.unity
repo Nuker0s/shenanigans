@@ -226,9 +226,7 @@ Transform:
   m_LocalPosition: {x: 0.4510002, y: 0.00303936, z: -1.3409153}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3747102976784263043}
-  - {fileID: 330585546}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &56344291
@@ -371,12 +369,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.584, y: 1.417, z: -1.544}
+  m_LocalRotation: {x: -0, y: -0.27394998, z: -0, w: 0.96174395}
+  m_LocalPosition: {x: 0.76825154, y: 1.4200394, z: -2.960898}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 56344290}
+  m_Father: {fileID: 608670625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -561,7 +559,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &608670622
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -651,6 +649,8 @@ Transform:
   - {fileID: 312284653}
   - {fileID: 814404787}
   - {fileID: 1177765940}
+  - {fileID: 330585546}
+  - {fileID: 3747102976784263043}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &608670626
@@ -671,7 +671,7 @@ MonoBehaviour:
   skydrag: 0.5
   speed: 1300
   flyspeed: 500
-  groundspeedlimit: 13
+  groundspeedlimit: 7000
   jumpforce: 500
   jumps: 0
   fallspeed: 0.5
@@ -742,7 +742,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &608670628
@@ -1016,7 +1016,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1919,8 +1919,8 @@ MonoBehaviour:
   tip: {fileID: 6056533945719867472}
   tiptarget: {fileID: 1021456829}
   tiprb: {fileID: 9069488205830289174}
-  force: 300
-  lerpvalue: 30
+  force: 150
+  verticalspeedmult: 1
 --- !u!1 &3401938982259065216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,12 +1952,12 @@ Transform:
   m_GameObject: {fileID: 3401938982259065216}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.902, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1021456829}
-  m_Father: {fileID: 56344290}
+  m_Father: {fileID: 608670625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4421020136724977588
 MonoBehaviour:
@@ -2023,9 +2023,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950639582584755714}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.6800557, y: -0.19371188, z: -0.19371188, w: 0.6800557}
+  m_LocalRotation: {x: -0.6800557, y: -0.19371186, z: -0.19371186, w: 0.6800557}
   m_LocalPosition: {x: 0.4510002, y: 1.5030394, z: -1.3409153}
-  m_LocalScale: {x: 0.10000001, y: 0.10000004, z: 0.10000004}
+  m_LocalScale: {x: 0.10000001, y: 0.10000007, z: 0.10000006}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -2080,8 +2080,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950639582584755714}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 1
+  m_Mass: 0.1
+  m_Drag: 6
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -2096,7 +2096,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1660057539 &9223372036854775807
