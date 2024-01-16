@@ -16,28 +16,34 @@ public class playermovement : MonoBehaviour
     public float maxadditionalfallspeed;
     public int maxjumps;
     public float sense;
-    
 
+    [Header("inputs")]
     public PlayerInput pinput;
     public InputAction move;
     public InputAction look;
     public InputAction jump;
+    public InputAction mousemodebutt;
+    [Header("vault")]
     public float vaultspeed;
     public Transform va1;
     public Transform va2;
+    [Header("rb and groundcheck")]
     public Rigidbody rb;
     public bool jumpsched = false;
     public Transform groundchecker;
     public LayerMask ground;
     public float groundcheckrange;
     public bool grounded = true;
+    [Header("camera")]
     public Vector2 camclamp;
+    public bool mousemode = false;
 
     void Awake()
     {
         move = pinput.actions.FindAction("Move");
         look = pinput.actions.FindAction("Look");
         jump = pinput.actions.FindAction("Jump");
+        mousemodebutt = pinput.actions.FindAction("Mousemode");
 
     }
     // Start is called before the first frame update
@@ -49,58 +55,87 @@ public class playermovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (mousemodebutt.WasPressedThisFrame())
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        
-        if (grounded) 
-        {
-            rb.drag = grounddrag;
-            if (!move.IsPressed())
+            if (mousemode)
             {
-                rb.drag = groundstopdrag;
+                mousemode = false;
+            }
+            else
+            {
+                mousemode = true;
+            }
+            if (mousemode)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
         }
-        else
+
+        if (!mousemode)
         {
-            rb.drag = skydrag;
-        }
-        if (isgrounded() && !grounded)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            if (Input.GetMouseButtonDown(0))
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+
+            if (grounded)
+            {
+                rb.drag = grounddrag;
+                if (!move.IsPressed())
+                {
+                    rb.drag = groundstopdrag;
+                }
+            }
+            else
+            {
+                rb.drag = skydrag;
+            }
+            if (isgrounded() && !grounded)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            }
+
+            if (isgrounded())
+            {
+                grounded = true;
+                jumps = maxjumps;
+            }
+            else
+            {
+                grounded = false;
+            }
+            if (jump.WasPressedThisFrame())
+            {
+                jumpsched = true;
+            }
+            /*if (grounded)
+            {
+                rb.drag = 5;
+            }
+            else
+            {
+                rb.drag = 1f;
+            }*/
+            lookero();
         }
 
-        if (isgrounded())
-        {
-            grounded = true;
-            jumps = maxjumps;
-        }
-        else
-        {
-            grounded = false;
-        }
-        if (jump.WasPressedThisFrame())
-        {
-            jumpsched = true;
-        }
-        /*if (grounded)
-        {
-            rb.drag = 5;
-        }
-        else
-        {
-            rb.drag = 1f;
-        }*/
-        lookero();
 
     }
     private void FixedUpdate()
     {
+        if (!mousemode)
+        {
+            movemento();
+            jumperro();
+        }
 
-        movemento();
-        jumperro();
         if (!grounded && rb.velocity.y < maxadditionalfallspeed)
         {
             rb.velocity += new Vector3(0, -fallspeed, 0);

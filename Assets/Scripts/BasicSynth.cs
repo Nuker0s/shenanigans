@@ -16,6 +16,7 @@ public class BasicSynth : MonoBehaviour
     public Text toread;
     public float lettertime = 0.3f;
     public float spacetime = 0.5f;
+    public Slider gainslider;
 
     private void OnAudioFilterRead(float[] data, int channels)
     {
@@ -26,16 +27,20 @@ public class BasicSynth : MonoBehaviour
             phase += increment;
             if (phase > math.PI*1000) phase = 0;
                 
-            data[i] = gain * Mathf.Sin(c1.Evaluate(math.sin(phase)));
+            data[i] = gain * Mathf.Sin(c1.Evaluate(math.sin(phase/2)));
             if (channels == 2)
             {
                 data[i + 1] = data[i];
             }
         }
     }
+    private void Update()
+    {
+        gain = gainslider.value;
+    }
     private void Start()
     {
-        StartCoroutine(soundloop());
+        //StartCoroutine(soundloop());
     }
     public void textread() 
     {
