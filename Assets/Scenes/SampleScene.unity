@@ -3703,14 +3703,17 @@ MonoBehaviour:
   toread: A
   lettertime: 0.3
   spacetime: 0.5
+  aus: {fileID: 1347661980}
   letters:
   - Letter: A
     Freqs: {x: 4, y: 0.5, z: 4}
     Pitches: {x: 1, y: 1, z: 1}
     Times: {x: 1, y: 1, z: 1}
+    Wavetypes: {x: 0, y: 0, z: 0}
   octave: 4
   test: 0
   testtime: 1
+  wavetype: 3
 --- !u!82 &1347661980
 AudioSource:
   m_ObjectHideFlags: 0

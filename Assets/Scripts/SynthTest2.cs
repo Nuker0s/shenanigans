@@ -19,12 +19,13 @@ public class SynthTest2 : MonoBehaviour
     public string toread = "A";
     public float lettertime = 0.3f;
     public float spacetime = 0.5f;
-    
+    public AudioSource aus;
     private Vector3 ones = new Vector3(1, 1, 1);
     public List<Lettersounds> letters = new List<Lettersounds>();
     public float octave = 4;
     public bool test;
     public float testtime;
+    public int wavetype;
 
     private void OnAudioFilterRead(float[] data, int channels)
     {
@@ -35,13 +36,33 @@ public class SynthTest2 : MonoBehaviour
             phase += increment;
             if (phase > math.PI * 1000) phase = 0;
 
-            data[i] = gain * Mathf.Sin(phase / phasediv);
+            switch (wavetype)
+            {
+                default: break;
+
+                case 0:
+                    data[i] = gain * Mathf.Sin(phase / phasediv);
+                    break;
+                case 1:
+                    data[i] = gain * Mathf.PerlinNoise1D(phase / phasediv);
+                    break;
+                case 2:
+                    data[i] = gain * (math.sin(phase) < 0 ? 0.5f : 0.1f);
+                    break;
+                case 3:
+                    data[i] = gain * 0.5f * (((math.sin(phase) + 0.5f) % 1f) - 0.5f) * 2;
+                    break;
+
+            }
+
+
             if (channels == 2)
             {
                 data[i + 1] = data[i];
             }
         }
     }
+    
     private void Update()
     {
         if (test) 
@@ -83,17 +104,25 @@ public class SynthTest2 : MonoBehaviour
                     frequency = 32 * octave + octoffset * tosay.Freqs[i];
                     yield return new WaitForSeconds(tosay.Times[i]*testtime);
                 }*/
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    float target = 32 * octave + octoffset * tosay.Freqs[i + 1];
-                    while (frequency <= target-1)
+                    //float target = 32 * octave + octoffset * tosay.Freqs[i + 1];
+                    float target = 440 * math.pow(2, tosay.Freqs[i] / 12);
+                    frequency = target;
+                    aus.pitch = tosay.Pitches[i];
+                    wavetype = (int)tosay.Wavetypes[i];
+                    yield return new WaitForSeconds(tosay.Times[i] * testtime);
+                    /*while (frequency <= target-1)
                     {
-                        frequency = math.lerp(frequency, target, tosay.Times[i] * testtime);
+
+                        //frequency = math.lerp(frequency, target, tosay.Times[i] * testtime);
                         yield return null;
-                    }
-                    
+                    }*/
+
                 }
                 frequency = 0;
+                wavetype = 0;
+                aus.pitch = 1;
                 
             }
             else
@@ -190,19 +219,20 @@ public class SynthTest2 : MonoBehaviour
         public Vector3 Freqs;
         public Vector3 Pitches;
         public Vector3 Times;
+        public Vector3 Wavetypes;
 
         public Lettersounds(string letter, Vector3 freqs)
         {
             Letter = letter;
             Freqs = freqs;
         }
-        public Lettersounds(string letter, Vector3 freqs, Vector3 pitches, Vector3 times)
+        public Lettersounds(string letter, Vector3 freqs, Vector3 pitches, Vector3 times, Vector3 wawetype)
         {
             Letter = letter;
             Freqs = freqs;
             Pitches = pitches;
             Times = times;
-
+            Wavetypes = wawetype;   
 
 
         }
