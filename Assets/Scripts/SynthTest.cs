@@ -29,7 +29,7 @@ public class SynthTest : MonoBehaviour
             phase += increment;
             if (phase > math.PI * 10000) phase = 0;
 
-            data[i] = gain * Mathf.Sin(math.sin(phase / phasediv.value));
+            data[i] = gain * Mathf.Sin(Mathf.PerlinNoise1D(phase / phasediv.value));
             if (channels == 2)
             {
                 data[i + 1] = data[i];

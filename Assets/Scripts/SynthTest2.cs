@@ -6,33 +6,36 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class BasicSynth : MonoBehaviour
+public class SynthTest2 : MonoBehaviour
 {
     public float gain;
     public float frequency = 440.0f;
     public float increment;
-    public float incmult;
+    public float incmult = 2;
     public float phase;
-    public float phasediv;
+    public float phasediv = 1;
     public float sampfreq = 48000.0f;
     public AnimationCurve c1;
-    public Text toread;
+    public string toread = "A";
     public float lettertime = 0.3f;
     public float spacetime = 0.5f;
-    public Slider gainslider;
-    private Vector3 ones = new Vector3(1,1,1);
-    public List<Lettersounds>  letters = new List<Lettersounds>();
+    
+    private Vector3 ones = new Vector3(1, 1, 1);
+    public List<Lettersounds> letters = new List<Lettersounds>();
+    public float octave = 4;
+    public bool test;
+    public float testtime;
 
     private void OnAudioFilterRead(float[] data, int channels)
     {
         //phase = 0;
         increment = frequency * incmult * Mathf.PI / sampfreq;
-        for (int i = 0; i < data.Length; i+=channels)
+        for (int i = 0; i < data.Length; i += channels)
         {
             phase += increment;
-            if (phase > math.PI*1000) phase = 0;
-                
-            data[i] = gain * Mathf.Sin(Mathf.PerlinNoise1D(phase/phasediv));
+            if (phase > math.PI * 1000) phase = 0;
+
+            data[i] = gain * Mathf.Sin(phase / phasediv);
             if (channels == 2)
             {
                 data[i + 1] = data[i];
@@ -41,46 +44,65 @@ public class BasicSynth : MonoBehaviour
     }
     private void Update()
     {
-        gain = gainslider.value;
+        if (test) 
+        {
+            test = false;
+            textread();
+        }
     }
     private void Start()
     {
         //StartCoroutine(soundloop());
     }
-    public void textread() 
+    public void textread()
     {
         StartCoroutine(soundloop());
         StartCoroutine(soundloop());
     }
-    public IEnumerator soundloop() 
+    public IEnumerator soundloop()
     {
-        string text = toread.text;
-        foreach (var letter in text)
+        
+        foreach (var letter in toread)
         {
             frequency = 0;
-            Lettersounds tosay;
+            Lettersounds tosay = null;
             foreach (var item in letters)
             {
-                if (item.Letter == (""+letter).ToUpper())
+                if (item.Letter == ("" + letter).ToUpper())
                 {
                     tosay = item;
+                    break;
                 }
+
+            }
+            float octoffset = (32 * octave) / 12;
+            if (tosay != null)
+            {
+                /*for (int i = 0; i < 3; i++)
+                {
+                    frequency = 32 * octave + octoffset * tosay.Freqs[i];
+                    yield return new WaitForSeconds(tosay.Times[i]*testtime);
+                }*/
+                for (int i = 0; i < 2; i++)
+                {
+                    float target = 32 * octave + octoffset * tosay.Freqs[i + 1];
+                    while (frequency <= target-1)
+                    {
+                        frequency = math.lerp(frequency, target, tosay.Times[i] * testtime);
+                        yield return null;
+                    }
+                    
+                }
+                frequency = 0;
                 
             }
-            if (frequency==0)
+            else
             {
                 yield return new WaitForSeconds(spacetime);
             }
-            if(frequency != 0) 
-            {
-                yield return new WaitForSeconds(lettertime);
-                frequency = 0;
-            }
             
-            
-
         }
-        
+
     }
 
 
@@ -161,27 +183,27 @@ public class BasicSynth : MonoBehaviour
     }*/
     [System.Serializable]
     public class Lettersounds
-        {
+    {
         [SerializeField]
         public string Letter;
 
         public Vector3 Freqs;
-        public Vector3 Pitches; 
-        public Vector3 Times; 
+        public Vector3 Pitches;
+        public Vector3 Times;
 
         public Lettersounds(string letter, Vector3 freqs)
         {
             Letter = letter;
             Freqs = freqs;
         }
-        public Lettersounds(string letter, Vector3 freqs, Vector3 pitches,Vector3 times)
+        public Lettersounds(string letter, Vector3 freqs, Vector3 pitches, Vector3 times)
         {
             Letter = letter;
             Freqs = freqs;
             Pitches = pitches;
             Times = times;
 
-            
+
 
         }
     }
