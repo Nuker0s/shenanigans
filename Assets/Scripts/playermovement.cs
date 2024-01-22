@@ -4,18 +4,18 @@ using UnityEngine.InputSystem;
 public class playermovement : MonoBehaviour
 {
     public Camera cam;
-    public float grounddrag;
-    public float groundstopdrag;
-    public float skydrag;
-    public float speed;
-    public float flyspeed;
-    public float groundspeedlimit;
-    public float jumpforce;
+    public float grounddrag=1;
+    public float groundstopdrag=5;
+    public float skydrag=0.5f;
+    public float speed=1300;
+    public float flyspeed=500;
+    public float groundspeedlimit=13;
+    public float jumpforce=500;
     public int jumps;
-    public float fallspeed;
-    public float maxadditionalfallspeed;
-    public int maxjumps;
-    public float sense;
+    public float fallspeed = 0.5f;
+    public float maxadditionalfallspeed = 5;
+    public int maxjumps = 2;
+    public float sense = 20;
 
     [Header("inputs")]
     public PlayerInput pinput;
@@ -24,7 +24,7 @@ public class playermovement : MonoBehaviour
     public InputAction jump;
     public InputAction mousemodebutt;
     [Header("vault")]
-    public float vaultspeed;
+    public float vaultspeed = 0;
     public Transform va1;
     public Transform va2;
     [Header("rb and groundcheck")]
@@ -32,7 +32,7 @@ public class playermovement : MonoBehaviour
     public bool jumpsched = false;
     public Transform groundchecker;
     public LayerMask ground;
-    public float groundcheckrange;
+    public float groundcheckrange = 0.3f;
     public bool grounded = true;
     [Header("camera")]
     public Vector2 camclamp;

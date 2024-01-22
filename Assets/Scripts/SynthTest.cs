@@ -35,6 +35,7 @@ public class SynthTest : MonoBehaviour
                 data[i + 1] = data[i];
             }
         }
+        phase = 0;
     }
     private void Update()
     {
