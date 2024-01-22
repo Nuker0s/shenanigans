@@ -13,6 +13,8 @@ public class Synthtest3 : MonoBehaviour
     public float sampfreq = 48000.0f;
     public float deltatime=0;
     public float variable = 0;
+    public AudioSource aus;
+    public float audiosourcedistance;
     // Start is called before the first frame update
     private void OnAudioFilterRead(float[] data, int channels)
     {
@@ -23,6 +25,7 @@ public class Synthtest3 : MonoBehaviour
             phase += increment;
             float phasevar = phase;
             phasevar = math.sin(phasevar);
+            phasevar = math.sin(phasevar*variable);
             data[i] = phasevar * gain;
             if (channels == 2)
             {
@@ -50,5 +53,6 @@ public class Synthtest3 : MonoBehaviour
     void Update()
     {
         deltatime = Time.deltaTime;
+        
     }
 }
