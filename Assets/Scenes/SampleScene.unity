@@ -3149,8 +3149,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1347661981}
-  - component: {fileID: 1347661980}
   - component: {fileID: 1347661982}
+  - component: {fileID: 1347661980}
   m_Layer: 0
   m_Name: synthtest
   m_TagString: Untagged
@@ -3179,7 +3179,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -3289,6 +3289,8 @@ MonoBehaviour:
   sampfreq: 48000
   deltatime: 0
   variable: 0
+  aus: {fileID: 1347661980}
+  audiosourcedistance: 0
 --- !u!1 &1442828440
 GameObject:
   m_ObjectHideFlags: 0
